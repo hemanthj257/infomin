@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import Drawer from "./Drawer";
 import Drawerdata from "./Drawerdata";
-import Signdialog from "./Signdialog";
-import Registerdialog from "./Registerdialog";
 
 interface NavigationItem {
     name: string;
@@ -15,10 +13,11 @@ interface NavigationItem {
 
 const navigation: NavigationItem[] = [
     { name: 'Home', href: '#/', current: true },
-    { name: 'Courses', href: '#courses', current: false },
-    { name: 'Mentor', href: '#mentor', current: false },
-    { name: 'Group', href: '/', current: false },
-    { name: 'Testimonial', href: '#testimonial', current: false },
+    { name: 'Internships', href: '#courses', current: false },
+    { name: 'Projects', href: '#mentor', current: false },
+    { name: 'About', href: '/', current: false },
+    { name: 'Products', href: '#testimonial', current: false },
+    { name: 'Contact Us', href: '#contact', current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -41,7 +40,6 @@ const CustomLink = ({ href, onClick, children }: { href: string; onClick: () => 
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = React.useState(false);
-
     const [currentLink, setCurrentLink] = useState('/');
 
     const handleLinkClick = (href: string) => {
@@ -53,73 +51,68 @@ const Navbar = () => {
             <>
                 <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
                     <div className="relative flex h-12 md:h-20 items-center justify-between">
-                        <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
+                        {/* Logo Section - Left */}
+                        <div className="flex-shrink-0 w-[160px]">
+                            <img
+                                className="block h-12 w-40 lg:hidden"
+                                src={'/assets/logo/logo.svg'}
+                                alt="dsign-logo"
+                            />
+                            <img
+                                className="hidden h-12 w-40 lg:block"
+                                src={'/assets/logo/logo.svg'}
+                                alt="dsign-logo"
+                            />
+                        </div>
 
-                            {/* LOGO */}
-
-                            <div className="flex flex-shrink-0 items-center">
-                                <img
-                                    className="block h-12 w-40 lg:hidden"
-                                    src={'/assets/logo/logo.svg'}
-                                    alt="dsign-logo"
-                                />
-                                <img
-                                    className="hidden h-full w-full lg:block"
-                                    src={'/assets/logo/logo.svg'}
-                                    alt="dsign-logo"
-                                />
-                            </div>
-
-                            {/* LINKS */}
-
-                            <div className="hidden lg:block m-auto">
-                                <div className="flex space-x-4">
-                                    {navigation.map((item) => (
-                                        <CustomLink
-                                            key={item.name}
-                                            href={item.href}
-                                            onClick={() => handleLinkClick(item.href)}
+                        {/* Navigation Links - Center */}
+                        <div className="hidden lg:flex flex-1 justify-center items-center px-2 md:px-0">
+                            <div className="flex items-center space-x-8">
+                                {navigation.slice(0, -1).map((item) => ( // Exclude Contact Us from main navigation
+                                    <CustomLink
+                                        key={item.name}
+                                        href={item.href}
+                                        onClick={() => handleLinkClick(item.href)}
+                                    >
+                                        <span
+                                            className={classNames(
+                                                item.href === currentLink ? 'underline-links' : 'text-slategray',
+                                                'px-2 py-2 text-base font-medium opacity-90 hover:opacity-100 transition-all'
+                                            )}
+                                            aria-current={item.href ? 'page' : undefined}
                                         >
-                                            <span
-                                                className={classNames(
-                                                    item.href === currentLink ? 'underline-links' : 'text-slategray',
-                                                    'px-3 py-4 text-lg font-normal opacity-75 hover:opacity-100'
-                                                )}
-                                                aria-current={item.href ? 'page' : undefined}
-                                            >
-                                                {item.name}
-                                            </span>
-                                        </CustomLink>
-                                    ))}
-                                </div>
+                                            {item.name}
+                                        </span>
+                                    </CustomLink>
+                                ))}
                             </div>
                         </div>
 
-                        {/* SIGNIN DIALOG */}
-
-                        <Signdialog />
-
-
-                        {/* REGISTER DIALOG */}
-
-                        <Registerdialog />
-
-
-                        {/* DRAWER FOR MOBILE VIEW */}
-
-                        {/* DRAWER ICON */}
-
-                        <div className='block lg:hidden'>
-                            <Bars3Icon className="block h-6 w-6" aria-hidden="true" onClick={() => setIsOpen(true)} />
+                        {/* Contact Us Button - Right */}
+                        <div className="hidden lg:flex flex-shrink-0 w-[160px] justify-end">
+                            <CustomLink
+                                href="#contact"
+                                onClick={() => handleLinkClick('#contact')}
+                            >
+                                <span className="inline-flex items-center justify-center px-8 py-2 text-base font-medium text-white bg-Blueviolet rounded-full transition-all duration-300 hover:bg-indigo-700 hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap">
+                                    Contact Us
+                                </span>
+                            </CustomLink>
                         </div>
 
-                        {/* DRAWER LINKS DATA */}
+                        {/* Mobile Menu Button */}
+                        <div className="flex lg:hidden">
+                            <Bars3Icon 
+                                className="block h-6 w-6" 
+                                aria-hidden="true" 
+                                onClick={() => setIsOpen(true)} 
+                            />
+                        </div>
 
+                        {/* Drawer Component */}
                         <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
                             <Drawerdata />
                         </Drawer>
-
-
                     </div>
                 </div>
             </>

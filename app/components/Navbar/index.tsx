@@ -2,6 +2,18 @@
 import Navbar from './Navbar';
 import React, { useEffect } from 'react';
 
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: 'Home',
+    href: '/',  // This is already correct - points to the root page
+  },
+  {
+    label: 'Courses',
+    href: '/courses',
+  },
+  // ...existing code...
+];
+
 const Navbarin: React.FC = () => {
     useEffect(() => {
         // The debounce function receives our function as a parameter

@@ -1,20 +1,17 @@
-import Banner from './components/Banner/index';
-import Companies from './components/Companies/Companies';
-import Courses from './components/Courses/index';
-import Mentor from './components/Mentor/index';
-import Testimonials from './components/Testimonials/index';
-import Newsletter from './components/Newsletter/Newsletter';
+import React from 'react';
+import HeroBanner from './components/HeroBanner';
+import FeaturedCourses from './components/FeaturedCourses';
 
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <main>
-      <Banner />
-      <Companies />
-      <Courses />
-      <Mentor />
-      <Testimonials />
-      <Newsletter />
-    </main>
-  )
+    <div className="min-h-screen bg-gray-50">
+      <HeroBanner />
+      <div className="py-8">
+        <h2 className="text-3xl font-bold text-center text-midnightblue mb-8">
+          Featured Courses
+        </h2>
+        <FeaturedCourses />
+      </div>
+    </div>
+  );
 }
